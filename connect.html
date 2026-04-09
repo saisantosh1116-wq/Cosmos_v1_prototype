@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cosmos — Connect</title>
+  <meta name="description" content="Subscribe to the Cosmos newsletter and leave feedback about your space exploration experience." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>" />
+</head>
+<body>
+
+  <canvas id="starfield" aria-hidden="true"></canvas>
+
+  <div id="preloader" role="status" aria-label="Loading">
+    <div class="orbital-spinner" aria-hidden="true">
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      <div class="orbital-dot"></div>
+    </div>
+    <p class="preloader-text">Establishing connection…</p>
+  </div>
+
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Cosmos Home">
+      <div class="nav-logo-icon" aria-hidden="true"></div>
+      COSMOS
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html"><span class="nav-icon" aria-hidden="true">🏠</span>Home</a></li>
+      <li><a href="apod.html"><span class="nav-icon" aria-hidden="true">🌠</span>APOD</a></li>
+      <li><a href="mars.html"><span class="nav-icon" aria-hidden="true">🔴</span>Mars</a></li>
+      <li><a href="asteroids.html"><span class="nav-icon" aria-hidden="true">☄️</span>Asteroids</a></li>
+      <li><a href="iss.html"><span class="nav-icon" aria-hidden="true">🛸</span>ISS & News</a></li>
+      <li><a href="connect.html"><span class="nav-icon" aria-hidden="true">📡</span>Connect</a></li>
+    </ul>
+    <button id="nav-hamburger" class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main class="page-wrapper">
+    <div class="container">
+
+      <div class="section-header">
+        <p class="section-eyebrow">✦ Connect · Stay in the Loop</p>
+        <h1 class="section-title">Join Our<br>Space Community</h1>
+        <p class="section-subtitle">
+          Get curated space news, APOD highlights, and mission updates delivered to your inbox.
+          Share your thoughts to help us improve.
+        </p>
+      </div>
+
+      <div class="connect-grid">
+
+        <!-- ── Left: Forms ── -->
+        <div style="display:flex;flex-direction:column;gap:28px">
+
+          <!-- Newsletter form -->
+          <div class="form-card glass-card animate-fadeInUp">
+            <h2 class="form-card-title">✉️ Newsletter</h2>
+            <p class="form-card-subtitle">Join thousands of space enthusiasts receiving weekly cosmic updates.</p>
+
+            <form id="newsletter-form" novalidate>
+              <div class="form-row">
+                <label class="form-label" for="nl-name">Your Name</label>
+                <input
+                  id="nl-name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Neil Armstrong"
+                  autocomplete="name"
+                />
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="nl-email">Email Address *</label>
+                <input
+                  id="nl-email"
+                  type="email"
+                  class="form-control"
+                  placeholder="explorer@cosmos.space"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+              <div class="form-row">
+                <label class="form-label">Interests</label>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
+                  <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text-secondary);cursor:pointer">
+                    <input type="checkbox" checked style="accent-color:var(--accent-cyan)"> APOD Daily
+                  </label>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text-secondary);cursor:pointer">
+                    <input type="checkbox" style="accent-color:var(--accent-cyan)"> Mars Missions
+                  </label>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text-secondary);cursor:pointer">
+                    <input type="checkbox" style="accent-color:var(--accent-cyan)"> Asteroid Alerts
+                  </label>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text-secondary);cursor:pointer">
+                    <input type="checkbox" checked style="accent-color:var(--accent-cyan)"> ISS Updates
+                  </label>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px">
+                🚀 Subscribe to Cosmos
+              </button>
+
+              <div class="form-success" role="alert"></div>
+
+              <p style="font-size:0.75rem;color:var(--text-muted);margin-top:12px;text-align:center">
+                No spam, ever. Unsubscribe anytime. By subscribing, you agree to our privacy policy.
+              </p>
+            </form>
+          </div>
+
+          <!-- Feedback form -->
+          <div class="form-card glass-card animate-fadeInUp" style="animation-delay:0.15s">
+            <h2 class="form-card-title">💬 Feedback</h2>
+            <p class="form-card-subtitle">Help us build a better space explorer. Your feedback matters.</p>
+
+            <form id="feedback-form" novalidate>
+              <div class="form-row">
+                <label class="form-label" for="fb-email">Email Address</label>
+                <input
+                  id="fb-email"
+                  type="email"
+                  class="form-control"
+                  placeholder="your@email.com"
+                  autocomplete="email"
+                />
+              </div>
+
+              <div class="form-row">
+                <label class="form-label">Overall Rating</label>
+                <div class="star-rating" role="radiogroup" aria-label="Rating out of 5">
+                  <input type="radio" name="rating" id="star5" value="5" />
+                  <label for="star5" title="5 stars" aria-label="5 stars">★</label>
+
+                  <input type="radio" name="rating" id="star4" value="4" />
+                  <label for="star4" title="4 stars" aria-label="4 stars">★</label>
+
+                  <input type="radio" name="rating" id="star3" value="3" />
+                  <label for="star3" title="3 stars" aria-label="3 stars">★</label>
+
+                  <input type="radio" name="rating" id="star2" value="2" />
+                  <label for="star2" title="2 stars" aria-label="2 stars">★</label>
+
+                  <input type="radio" name="rating" id="star1" value="1" />
+                  <label for="star1" title="1 star" aria-label="1 star">★</label>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <label class="form-label" for="fb-topic">Topic</label>
+                <select id="fb-topic" class="form-control">
+                  <option value="">Select a topic…</option>
+                  <option>General Experience</option>
+                  <option>APOD Page</option>
+                  <option>Mars Rover Gallery</option>
+                  <option>Asteroid Tracker</option>
+                  <option>ISS & News</option>
+                  <option>Bug Report</option>
+                  <option>Feature Request</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label class="form-label" for="fb-message">Your Message *</label>
+                <textarea
+                  id="fb-message"
+                  class="form-control"
+                  rows="4"
+                  placeholder="Tell us what you think…"
+                  required
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+                📤 Send Feedback
+              </button>
+
+              <div class="form-success" role="alert"></div>
+            </form>
+          </div>
+
+        </div>
+
+        <!-- ── Right: Info ── -->
+        <div class="animate-fadeInUp" style="animation-delay:0.2s">
+          <div class="connect-info-card glass-card">
+
+            <div style="text-align:center;margin-bottom:8px">
+              <div style="font-size:4rem;margin-bottom:12px">🌌</div>
+              <h3 style="font-size:1.3rem;font-weight:700;margin-bottom:8px">Explore the Universe</h3>
+              <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.7">
+                Cosmos is a passion project powered by NASA's open data initiative.
+                Every image, data point, and orbit trace is real — pulled live from
+                NASA's API infrastructure.
+              </p>
+            </div>
+
+            <hr style="border:none;border-top:1px solid var(--border-glass);margin:8px 0" />
+
+            <div class="info-item">
+              <div class="info-icon">🌠</div>
+              <div>
+                <div class="info-title">Daily APOD</div>
+                <div class="info-text">Curated by professional astronomers, each image tells a story of our cosmos.</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon">🔴</div>
+              <div>
+                <div class="info-title">Mars Exploration</div>
+                <div class="info-text">Browse 500,000+ raw photos from Curiosity, Perseverance, and Opportunity rovers.</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon">☄️</div>
+              <div>
+                <div class="info-title">Asteroid Watch</div>
+                <div class="info-text">Monitor near-Earth objects tracked by NASA's Planetary Defense Coordination Office.</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon">🛸</div>
+              <div>
+                <div class="info-title">Live ISS Tracking</div>
+                <div class="info-text">Follow the ISS at 27,600 km/h as it orbits Earth 15 times a day.</div>
+              </div>
+            </div>
+
+            <hr style="border:none;border-top:1px solid var(--border-glass);margin:8px 0" />
+
+            <!-- Social links -->
+            <div style="text-align:center">
+              <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:0.15em">Follow the Mission</p>
+              <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+                <a href="https://twitter.com/NASA" target="_blank" rel="noopener"
+                  class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px">
+                  𝕏 @NASA
+                </a>
+                <a href="https://www.instagram.com/nasa/" target="_blank" rel="noopener"
+                  class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px">
+                  📷 @nasa
+                </a>
+                <a href="https://api.nasa.gov/" target="_blank" rel="noopener"
+                  class="btn btn-ghost" style="font-size:0.82rem;padding:8px 16px">
+                  🔑 Get API Key
+                </a>
+              </div>
+            </div>
+
+            <!-- API credits -->
+            <div style="padding:20px;border-radius:12px;background:rgba(5,10,25,0.5);border:1px solid var(--border-glass);margin-top:8px">
+              <p style="font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:12px">APIs Used</p>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="font-size:0.82rem;color:var(--text-secondary)">
+                  <span style="color:var(--accent-cyan);font-family:var(--font-mono)">NASA APOD</span>
+                  — api.nasa.gov
+                </div>
+                <div style="font-size:0.82rem;color:var(--text-secondary)">
+                  <span style="color:var(--accent-cyan);font-family:var(--font-mono)">NASA Mars Photos</span>
+                  — api.nasa.gov
+                </div>
+                <div style="font-size:0.82rem;color:var(--text-secondary)">
+                  <span style="color:var(--accent-cyan);font-family:var(--font-mono)">NASA NeoWs</span>
+                  — api.nasa.gov
+                </div>
+                <div style="font-size:0.82rem;color:var(--text-secondary)">
+                  <span style="color:var(--accent-cyan);font-family:var(--font-mono)">Where the ISS at?</span>
+                  — wheretheiss.at
+                </div>
+                <div style="font-size:0.82rem;color:var(--text-secondary)">
+                  <span style="color:var(--accent-cyan);font-family:var(--font-mono)">Spaceflight News</span>
+                  — spaceflightnewsapi.net
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      Cosmos — NASA Space Explorer &nbsp;·&nbsp;
+      All space imagery and data courtesy of
+      <a href="https://www.nasa.gov" target="_blank" rel="noopener">NASA</a>
+      &nbsp;·&nbsp; Built for the curious
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

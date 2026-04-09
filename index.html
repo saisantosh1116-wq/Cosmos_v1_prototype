@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cosmos — NASA Space Explorer</title>
+  <meta name="description" content="Explore the universe through NASA's live APIs — Mars rovers, asteroid tracking, ISS live position, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>" />
+</head>
+<body class="home-page">
+
+  <canvas id="starfield" aria-hidden="true"></canvas>
+
+  <div id="preloader" role="status" aria-label="Loading">
+    <div class="orbital-spinner" aria-hidden="true">
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      <div class="orbital-dot"></div>
+    </div>
+    <p class="preloader-text">Initiating launch sequence…</p>
+  </div>
+
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Cosmos Home">
+      <div class="nav-logo-icon" aria-hidden="true"></div>
+      COSMOS
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html"><span class="nav-icon" aria-hidden="true">🏠</span>Home</a></li>
+      <li><a href="apod.html"><span class="nav-icon" aria-hidden="true">🌠</span>APOD</a></li>
+      <li><a href="mars.html"><span class="nav-icon" aria-hidden="true">🔴</span>Mars</a></li>
+      <li><a href="asteroids.html"><span class="nav-icon" aria-hidden="true">☄️</span>Asteroids</a></li>
+      <li><a href="iss.html"><span class="nav-icon" aria-hidden="true">🛸</span>ISS & News</a></li>
+      <li><a href="connect.html"><span class="nav-icon" aria-hidden="true">📡</span>Connect</a></li>
+    </ul>
+    <button id="nav-hamburger" class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="home-hero" aria-label="Hero">
+    <div class="home-orb" aria-hidden="true"></div>
+    <div class="home-scan-line" aria-hidden="true"></div>
+    <div class="home-ring" aria-hidden="true"></div>
+    <div class="home-ring" aria-hidden="true"></div>
+    <div class="home-ring" aria-hidden="true"></div>
+
+    <div style="position:relative;z-index:2">
+      <p class="hero-eyebrow">✦ NASA Open APIs &nbsp;·&nbsp; Live Space Data &nbsp;·&nbsp; Five Missions</p>
+
+      <h1 class="hero-title">
+        <span class="hero-title-main">COSMOS</span>
+        <span class="hero-title-sub">NASA Space Explorer</span>
+      </h1>
+
+      <p class="hero-description">
+        Journey through the cosmos with real-time NASA data —
+        from today's astronomical wonder to the red surface of Mars,
+        asteroid close approaches, and the ISS orbiting 408&nbsp;km overhead.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="apod.html" class="btn-red">
+          <span>🌠</span><span>Today's APOD</span>
+        </a>
+        <a href="mars.html" class="btn-red-ghost">🔴 Explore Mars</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <span class="hero-scroll-text">Scroll to explore</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="home-cards-section" style="padding-top:0;padding-bottom:0">
+    <div class="home-stats">
+      <div class="home-stat-item">
+        <div class="home-stat-num">5</div>
+        <div class="home-stat-label">Live APIs</div>
+      </div>
+      <div class="home-stat-item">
+        <div class="home-stat-num">500K+</div>
+        <div class="home-stat-label">Mars Photos</div>
+      </div>
+      <div class="home-stat-item">
+        <div class="home-stat-num">5s</div>
+        <div class="home-stat-label">ISS Update Rate</div>
+      </div>
+      <div class="home-stat-item">
+        <div class="home-stat-num">∞</div>
+        <div class="home-stat-label">Discoveries</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARDS -->
+  <div class="home-cards-section">
+    <p class="home-section-label" aria-hidden="true">Select Your Mission</p>
+
+    <!-- Top: 2 featured -->
+    <div class="home-cards-top">
+
+      <!-- APOD -->
+      <a href="apod.html" class="explore-card card-featured" style="animation-delay:0.1s"
+         aria-label="Astronomy Picture of the Day">
+        <div class="card-accent-bar"></div>
+        <svg class="card-bg-graphic" width="240" height="210" viewBox="0 0 240 210" fill="none" aria-hidden="true">
+          <circle cx="185" cy="65" r="60" fill="#7a0000" opacity="0.8"/>
+          <circle cx="185" cy="65" r="40" fill="#cc2200" opacity="0.7"/>
+          <circle cx="185" cy="65" r="22" fill="#ff4400" opacity="0.6"/>
+          <circle cx="105" cy="155" r="3" fill="white" opacity="0.8"/>
+          <circle cx="145" cy="125" r="2" fill="white" opacity="0.7"/>
+          <circle cx="65"  cy="85"  r="1.5" fill="white" opacity="0.6"/>
+          <circle cx="195" cy="155" r="2" fill="white" opacity="0.7"/>
+          <circle cx="35"  cy="55"  r="1" fill="white" opacity="0.5"/>
+          <circle cx="55"  cy="175" r="1.5" fill="white" opacity="0.4"/>
+          <circle cx="215" cy="110" r="1" fill="white" opacity="0.5"/>
+        </svg>
+        <div class="card-body">
+          <div class="card-icon-row">
+            <div class="card-icon">🌠</div>
+            <span class="card-badge">Daily Update</span>
+          </div>
+          <div class="card-title">Astronomy Picture<br>of the Day</div>
+          <div class="card-description">
+            NASA's iconic daily image of our universe — from distant galaxies
+            and nebulae to phenomena right here in our solar system.
+            Each image comes with an expert astronomer's explanation.
+          </div>
+          <div class="card-legend">
+            <span class="legend-chip hot">Today's Image</span>
+            <span class="legend-chip">Photography</span>
+            <span class="legend-chip">NASA Science</span>
+            <span class="legend-chip">HD Resolution</span>
+            <span class="legend-chip">Video Support</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-footer-text">api.nasa.gov / APOD</span>
+          <span class="card-arrow">
+            Explore
+            <svg viewBox="0 0 14 14"><path d="M1 7h12M7 1l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Mars -->
+      <a href="mars.html" class="explore-card card-featured" style="animation-delay:0.2s"
+         aria-label="Mars Rover Photo Gallery">
+        <div class="card-accent-bar"></div>
+        <svg class="card-bg-graphic" width="240" height="210" viewBox="0 0 240 210" fill="none" aria-hidden="true">
+          <circle cx="165" cy="110" r="95" fill="#5a0000" opacity="0.7"/>
+          <circle cx="160" cy="105" r="78" fill="#8b1a00" opacity="0.7"/>
+          <ellipse cx="158" cy="160" rx="55" ry="20" fill="#cc3300" opacity="0.4"/>
+          <circle cx="130" cy="80"  r="12" fill="#3d0000" opacity="0.8"/>
+          <circle cx="178" cy="130" r="8"  fill="#3d0000" opacity="0.7"/>
+          <circle cx="145" cy="118" r="5"  fill="#3d0000" opacity="0.6"/>
+          <path d="M75 95 Q110 88 145 100 Q175 112 205 104" stroke="#ff4400" stroke-width="1.5" opacity="0.5" fill="none"/>
+          <path d="M65 120 Q102 112 140 124 Q170 135 208 126" stroke="#ff4400" stroke-width="1" opacity="0.3" fill="none"/>
+        </svg>
+        <div class="card-body">
+          <div class="card-icon-row">
+            <div class="card-icon">🔴</div>
+            <span class="card-badge">Photo Gallery</span>
+          </div>
+          <div class="card-title">Mars Rover<br>Photo Gallery</div>
+          <div class="card-description">
+            Browse raw imagery beamed across 140 million miles of space from
+            NASA's Mars rovers. Filter by rover and Martian sol day,
+            then open any photo in a full-screen lightbox.
+          </div>
+          <div class="card-legend">
+            <span class="legend-chip hot">Curiosity</span>
+            <span class="legend-chip hot">Perseverance</span>
+            <span class="legend-chip">Opportunity</span>
+            <span class="legend-chip">Sol Picker</span>
+            <span class="legend-chip">Lightbox Viewer</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-footer-text">500,000+ raw surface images</span>
+          <span class="card-arrow">
+            Explore
+            <svg viewBox="0 0 14 14"><path d="M1 7h12M7 1l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Bottom: 3 cards -->
+    <div class="home-cards-bottom">
+
+      <!-- Asteroids -->
+      <a href="asteroids.html" class="explore-card" style="animation-delay:0.3s"
+         aria-label="Asteroid Tracker">
+        <div class="card-accent-bar"></div>
+        <svg class="card-bg-graphic" width="190" height="170" viewBox="0 0 190 170" fill="none" aria-hidden="true">
+          <ellipse cx="135" cy="108" rx="48" ry="22" stroke="#8b0000" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+          <polygon points="132,94 144,106 132,118 120,106" fill="#660000"/>
+          <polygon points="130,92 143,105 130,117 117,105" fill="#8b0000" opacity="0.7"/>
+          <circle cx="52" cy="48" r="7" fill="#550000"/>
+          <polygon points="50,38 58,47 50,56 42,47" fill="#880000" opacity="0.7"/>
+          <circle cx="162" cy="38" r="5" fill="#770000"/>
+          <circle cx="28" cy="130" r="3" fill="#660000" opacity="0.6"/>
+        </svg>
+        <div class="card-body">
+          <div class="card-icon-row">
+            <div class="card-icon">☄️</div>
+            <span class="card-badge">Real-time</span>
+          </div>
+          <div class="card-title">Asteroid Tracker</div>
+          <div class="card-description">
+            Monitor near-Earth objects making close approaches today. Strict color-coding
+            separates safe passes from potentially hazardous asteroids with red glow alerts.
+          </div>
+          <div class="card-legend">
+            <span class="legend-chip" style="color:#ff6060;border-color:rgba(255,60,60,0.35)">⚠ Hazardous PHA</span>
+            <span class="legend-chip" style="color:#00e59b;border-color:rgba(0,229,155,0.3)">✓ Safe NEO</span>
+            <span class="legend-chip">NeoWs API</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-footer-text">Today's close approaches</span>
+          <span class="card-arrow">
+            Track
+            <svg viewBox="0 0 14 14"><path d="M1 7h12M7 1l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- ISS -->
+      <a href="iss.html" class="explore-card" style="animation-delay:0.4s"
+         aria-label="ISS Tracker and Space News">
+        <div class="card-accent-bar"></div>
+        <svg class="card-bg-graphic" width="190" height="170" viewBox="0 0 190 170" fill="none" aria-hidden="true">
+          <circle cx="125" cy="98"  r="58" stroke="#3d0000" stroke-width="1" fill="none"/>
+          <circle cx="125" cy="98"  r="42" stroke="#5a0000" stroke-width="1" fill="none" stroke-dasharray="3 2"/>
+          <circle cx="125" cy="98"  r="25" stroke="#770000" stroke-width="1" fill="none"/>
+          <rect x="113" y="92" width="24" height="12" rx="2" fill="#660000"/>
+          <rect x="93"  y="96" width="44" height="4"  rx="1" fill="#880000"/>
+          <rect x="121" y="78" width="4"  height="20" rx="1" fill="#880000"/>
+          <circle cx="38" cy="42" r="3" fill="#550000" opacity="0.7"/>
+          <circle cx="162" cy="148" r="2" fill="#550000" opacity="0.5"/>
+        </svg>
+        <div class="card-body">
+          <div class="card-icon-row">
+            <div class="card-icon">🛸</div>
+            <div class="card-live">
+              <div class="card-live-dot"></div>
+              LIVE
+            </div>
+          </div>
+          <div class="card-title">ISS Tracker &<br>Space News</div>
+          <div class="card-description">
+            Follow the ISS live on an interactive dark map — coordinates refresh
+            every 5 seconds. Paired with a live space news feed and
+            your personal localStorage reading list.
+          </div>
+          <div class="card-legend">
+            <span class="legend-chip hot">Live Map</span>
+            <span class="legend-chip">5s Polling</span>
+            <span class="legend-chip">Space News</span>
+            <span class="legend-chip">Reading List</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-footer-text">408 km · 27,600 km/h</span>
+          <span class="card-arrow">
+            Track
+            <svg viewBox="0 0 14 14"><path d="M1 7h12M7 1l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Connect -->
+      <a href="connect.html" class="explore-card" style="animation-delay:0.5s"
+         aria-label="Connect with Cosmos">
+        <div class="card-accent-bar"></div>
+        <svg class="card-bg-graphic" width="190" height="170" viewBox="0 0 190 170" fill="none" aria-hidden="true">
+          <circle cx="128" cy="98" r="14" fill="#550000"/>
+          <circle cx="128" cy="98" r="26" stroke="#660000" stroke-width="1.5" fill="none"/>
+          <circle cx="128" cy="98" r="42" stroke="#500000" stroke-width="1"   fill="none"/>
+          <circle cx="128" cy="98" r="60" stroke="#3d0000" stroke-width="1"   fill="none" stroke-dasharray="4 3"/>
+          <line x1="86" y1="56"  x2="128" y2="98" stroke="#770000" stroke-width="1.5"/>
+          <line x1="80" y1="98"  x2="128" y2="98" stroke="#770000" stroke-width="1.5"/>
+          <line x1="86" y1="140" x2="128" y2="98" stroke="#770000" stroke-width="1.5"/>
+          <circle cx="82" cy="56"  r="6" fill="#aa2200"/>
+          <circle cx="76" cy="98"  r="6" fill="#aa2200"/>
+          <circle cx="82" cy="140" r="6" fill="#aa2200"/>
+        </svg>
+        <div class="card-body">
+          <div class="card-icon-row">
+            <div class="card-icon">📡</div>
+            <span class="card-badge">Community</span>
+          </div>
+          <div class="card-title">Connect</div>
+          <div class="card-description">
+            Subscribe to weekly space news and mission updates.
+            Share feedback to help shape Cosmos — rate your experience
+            and tell us what to explore next.
+          </div>
+          <div class="card-legend">
+            <span class="legend-chip">Newsletter</span>
+            <span class="legend-chip">⭐ Star Rating</span>
+            <span class="legend-chip">Feedback</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-footer-text">Join the community</span>
+          <span class="card-arrow">
+            Join
+            <svg viewBox="0 0 14 14"><path d="M1 7h12M7 1l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <footer class="home-footer-strip">
+    <p>
+      Cosmos — NASA Space Explorer &nbsp;·&nbsp;
+      Powered by <a href="https://api.nasa.gov/" target="_blank" rel="noopener">NASA Open APIs</a>,
+      <a href="https://wheretheiss.at/" target="_blank" rel="noopener">WhereTheISS.at</a>
+      &amp; <a href="https://spaceflightnewsapi.net/" target="_blank" rel="noopener">Spaceflight News API</a>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

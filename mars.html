@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cosmos — Mars Rover Gallery</title>
+  <meta name="description" content="Browse thousands of photos taken by NASA Mars rovers — Curiosity, Perseverance and Opportunity." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔴</text></svg>" />
+</head>
+<body>
+
+  <canvas id="starfield" aria-hidden="true"></canvas>
+
+  <div id="preloader" role="status" aria-label="Loading">
+    <div class="orbital-spinner" aria-hidden="true">
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      <div class="orbital-dot"></div>
+    </div>
+    <p class="preloader-text">Connecting to rovers…</p>
+  </div>
+
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Cosmos Home">
+      <div class="nav-logo-icon" aria-hidden="true"></div>
+      COSMOS
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html"><span class="nav-icon" aria-hidden="true">🏠</span>Home</a></li>
+      <li><a href="apod.html"><span class="nav-icon" aria-hidden="true">🌠</span>APOD</a></li>
+      <li><a href="mars.html"><span class="nav-icon" aria-hidden="true">🔴</span>Mars</a></li>
+      <li><a href="asteroids.html"><span class="nav-icon" aria-hidden="true">☄️</span>Asteroids</a></li>
+      <li><a href="iss.html"><span class="nav-icon" aria-hidden="true">🛸</span>ISS & News</a></li>
+      <li><a href="connect.html"><span class="nav-icon" aria-hidden="true">📡</span>Connect</a></li>
+    </ul>
+    <button id="nav-hamburger" class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main class="page-wrapper">
+    <div class="container">
+
+      <div class="section-header">
+        <p class="section-eyebrow">✦ NASA · Mars Exploration</p>
+        <h1 class="section-title">Mars Rover<br>Photo Gallery</h1>
+        <p class="section-subtitle">
+          Explore raw imagery beamed back across 140 million miles of space from
+          NASA's fleet of Mars surface explorers.
+        </p>
+      </div>
+
+      <!-- Controls -->
+      <div class="mars-controls glass-card">
+        <div class="mars-controls-grid">
+          <div class="form-group">
+            <label class="form-label" for="rover-select">🚗 Select Rover</label>
+            <select id="rover-select" class="form-control">
+              <option value="curiosity">Curiosity</option>
+              <option value="perseverance">Perseverance</option>
+              <option value="opportunity">Opportunity</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="sol-input">☀️ Martian Sol</label>
+            <input
+              id="sol-input"
+              type="number"
+              class="form-control"
+              value="1000"
+              min="0"
+              max="4000"
+              placeholder="e.g. 1000"
+            />
+          </div>
+          <div class="form-group" style="justify-content:flex-end">
+            <p class="form-label" style="opacity:0">btn</p>
+            <button id="fetch-mars-btn" class="btn btn-primary" style="width:100%">
+              🔍 Fetch Photos
+            </button>
+          </div>
+        </div>
+
+        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:14px">
+          💡 Try Sol 1000 for Curiosity, Sol 500 for Perseverance, or Sol 100 for Opportunity.
+        </p>
+      </div>
+
+      <!-- Count badge -->
+      <div id="mars-count" class="mars-count-badge" style="display:none"></div>
+
+      <!-- Photo grid -->
+      <div id="mars-grid" class="mars-grid">
+        <div class="spinner"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox">
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Mars rover photo fullscreen" />
+      <p id="lightbox-caption" class="lightbox-caption"></p>
+    </div>
+    <button id="lightbox-close" class="lightbox-close" aria-label="Close lightbox">✕</button>
+  </div>
+
+  <footer>
+    <p>
+      Mars imagery courtesy of
+      <a href="https://mars.nasa.gov/" target="_blank" rel="noopener">NASA Mars Exploration Program</a>
+      &nbsp;·&nbsp; Cosmos Space Explorer
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
