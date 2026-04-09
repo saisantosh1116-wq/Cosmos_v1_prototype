@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cosmos — ISS Tracker & Space News</title>
+  <meta name="description" content="Track the International Space Station live on a map and read the latest space news." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛸</text></svg>" />
+</head>
+<body>
+
+  <canvas id="starfield" aria-hidden="true"></canvas>
+
+  <div id="preloader" role="status" aria-label="Loading">
+    <div class="orbital-spinner" aria-hidden="true">
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      <div class="orbital-dot"></div>
+    </div>
+    <p class="preloader-text">Acquiring ISS signal…</p>
+  </div>
+
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Cosmos Home">
+      <div class="nav-logo-icon" aria-hidden="true"></div>
+      COSMOS
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html"><span class="nav-icon" aria-hidden="true">🏠</span>Home</a></li>
+      <li><a href="apod.html"><span class="nav-icon" aria-hidden="true">🌠</span>APOD</a></li>
+      <li><a href="mars.html"><span class="nav-icon" aria-hidden="true">🔴</span>Mars</a></li>
+      <li><a href="asteroids.html"><span class="nav-icon" aria-hidden="true">☄️</span>Asteroids</a></li>
+      <li><a href="iss.html"><span class="nav-icon" aria-hidden="true">🛸</span>ISS & News</a></li>
+      <li><a href="connect.html"><span class="nav-icon" aria-hidden="true">📡</span>Connect</a></li>
+    </ul>
+    <button id="nav-hamburger" class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main class="page-wrapper">
+    <div class="container">
+
+      <div class="section-header">
+        <p class="section-eyebrow">✦ Live · International Space Station</p>
+        <h1 class="section-title">ISS Tracker &<br>Space News</h1>
+        <p class="section-subtitle">
+          Follow the International Space Station orbiting at 400 km above Earth,
+          and stay updated with the latest space exploration news.
+        </p>
+      </div>
+
+      <!-- Split layout -->
+      <div class="iss-split">
+
+        <!-- ── Left: ISS Position ── -->
+        <div class="iss-left">
+
+          <!-- Coordinates card -->
+          <div class="iss-coords-card glass-card animate-fadeInUp">
+            <p class="iss-label">📡 ISS Current Coordinates</p>
+            <div class="iss-coord-grid">
+              <div class="iss-coord-item">
+                <div class="iss-coord-label">Latitude</div>
+                <div class="iss-coord-value" id="iss-lat">—</div>
+              </div>
+              <div class="iss-coord-item">
+                <div class="iss-coord-label">Longitude</div>
+                <div class="iss-coord-value" id="iss-lon">—</div>
+              </div>
+            </div>
+            <div class="iss-status">
+              <div class="iss-live-dot"></div>
+              Live position · Updates every 5 seconds
+            </div>
+          </div>
+
+          <!-- ISS quick facts -->
+          <div class="glass-card animate-fadeInUp" style="padding:22px;animation-delay:0.1s">
+            <p class="iss-label" style="margin-bottom:14px">🔭 Station Facts</p>
+            <div style="display:grid;gap:10px">
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(100,160,255,0.08)">
+                <span style="font-size:0.82rem;color:var(--text-muted)">Orbital Altitude</span>
+                <span style="font-family:var(--font-mono);font-size:0.85rem;font-weight:600;color:var(--accent-cyan)">~408 km</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(100,160,255,0.08)">
+                <span style="font-size:0.82rem;color:var(--text-muted)">Orbital Speed</span>
+                <span style="font-family:var(--font-mono);font-size:0.85rem;font-weight:600;color:var(--text-primary)">27,600 km/h</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(100,160,255,0.08)">
+                <span style="font-size:0.82rem;color:var(--text-muted)">Orbits per Day</span>
+                <span style="font-family:var(--font-mono);font-size:0.85rem;font-weight:600;color:var(--text-primary)">15.5</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:8px 0">
+                <span style="font-size:0.82rem;color:var(--text-muted)">Mass</span>
+                <span style="font-family:var(--font-mono);font-size:0.85rem;font-weight:600;color:var(--text-primary)">444,615 kg</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map -->
+          <div class="iss-map-card animate-fadeInUp" style="animation-delay:0.2s">
+            <div id="iss-map" aria-label="ISS live position map" role="img"></div>
+          </div>
+
+        </div>
+
+        <!-- ── Right: Space News ── -->
+        <div class="iss-right animate-fadeInUp" style="animation-delay:0.15s">
+
+          <!-- News feed -->
+          <div class="news-panel glass-card">
+            <div class="news-panel-header">
+              🛰️ Latest Space News
+              <span style="font-size:0.72rem;font-family:var(--font-mono);color:var(--text-muted);margin-left:auto">
+                via Spaceflight News API
+              </span>
+            </div>
+            <div id="news-feed" class="news-feed">
+              <div class="spinner"></div>
+            </div>
+          </div>
+
+          <!-- Reading List -->
+          <div class="glass-card" style="padding:24px">
+            <div class="reading-list-header">
+              📚 Reading List
+              <span style="font-size:0.72rem;font-family:var(--font-mono);color:var(--text-muted);margin-left:auto;font-weight:400">
+                Saved locally
+              </span>
+            </div>
+            <div id="reading-list">
+              <div class="reading-list-empty">
+                📚 Your reading list is empty. Save articles to find them here.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      ISS position from
+      <a href="https://wheretheiss.at/" target="_blank" rel="noopener">Where the ISS at?</a>
+      &nbsp;·&nbsp; News from
+      <a href="https://spaceflightnewsapi.net/" target="_blank" rel="noopener">Spaceflight News API</a>
+      &nbsp;·&nbsp; Map via
+      <a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet.js</a>
+    </p>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN2GqhM=" crossorigin=""></script>
+  <script src="app.js"></script>
+</body>
+</html>
